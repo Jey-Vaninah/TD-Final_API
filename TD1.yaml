@@ -161,6 +161,23 @@ paths:
 
 components:
   schemas:
+    Meal:
+      allOf:
+        - $ref: '#/components/schemas/MealIdentifier'
+        - $ref: '#/components/schemas/CreateMeal'
+    MealIdentifier:
+      type: object
+      properties:
+        id:
+          type: string
+    CreateMeal:
+      type: object
+      properties:
+        name:
+          type: string
+        price:
+          type: number
+          format: decimal
     Competition:
       type: object
       properties:
@@ -168,7 +185,6 @@ components:
           type: string
         location:
           type: string
-
     Team:
       type: object
       properties:
@@ -176,7 +192,6 @@ components:
           type: string
         slogan:
           type: string
-
     Player:
       type: object
       properties:
