@@ -74,7 +74,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/Team'
     post:
-      summary: Create a new team
       requestBody:
         required: true
         content:
@@ -82,12 +81,11 @@ paths:
             schema:
               $ref: '#/components/schemas/Team'
       responses:
-        '201':
-          description: Team created successfully
+        201:
+          description: Successfully
 
   /teams/{teamId}/competitions:
     post:
-      summary: Associate a team with competitions
       parameters:
         - name: teamId
           in: path
@@ -103,12 +101,11 @@ paths:
               items:
                 type: string
       responses:
-        '200':
-          description: Competitions associated successfully
+        200:
+          description: Successfully
 
   /teams/{teamId}/players:
     get:
-      summary: Get the list of players in a team
       parameters:
         - name: teamId
           in: path
@@ -119,7 +116,6 @@ paths:
           in: query
           schema:
             type: string
-          description: Filter players by name
         - name: page
           in: query
           required: true
@@ -140,7 +136,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/Player'
     post:
-      summary: Add players to a team
       parameters:
         - name: teamId
           in: path
@@ -156,43 +151,71 @@ paths:
               items:
                 $ref: '#/components/schemas/Player'
       responses:
-        '201':
-          description: Players added successfully
+        201:
+          description: Successfully
 
 components:
   schemas:
-    Meal:
-      allOf:
-        - $ref: '#/components/schemas/MealIdentifier'
-        - $ref: '#/components/schemas/CreateMeal'
-    MealIdentifier:
+    Competition:
       type: object
       properties:
         id:
           type: string
-    CreateMeal:
-      type: object
-      properties:
         name:
           type: string
-        price:
-          type: number
-          format: decimal
-    Competition:
+        location:
+          type: string
+      
+    CreateCompetition:
       type: object
       properties:
         name:
           type: string
         location:
           type: string
+
     Team:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slogan:
+          type: string
+        competitions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Competition'
+        players:
+          type: array
+          items:
+            $ref: '#/components/schemas/Player'
+      
+    CreateTeam:
       type: object
       properties:
         name:
           type: string
         slogan:
           type: string
+
     Player:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        number:
+          type: integer
+        strongFoot:
+          type: string
+          enum:
+            - Left
+            - Right
+
+    CreatePlayer:
       type: object
       properties:
         name:
